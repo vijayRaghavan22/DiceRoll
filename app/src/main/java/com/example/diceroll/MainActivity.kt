@@ -2,20 +2,27 @@ package com.example.diceroll
 
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var myFIrstDice : Dice = Dice(4,"MyFIrstDice");
-        val luckyNumber=4;
-
-        val rollButton : Button = findViewById(R.id.button);
+        val myFirstDice = Dice(4,"MyFirstDice")
+        val luckyNumber=4
+        val rollButton : Button = findViewById(R.id.button)
+        val myViewIs : TextView = findViewById(R.id.textView)
+        val diceViewIs : ImageView = findViewById(R.id.diceView)
         rollButton.setOnClickListener {
-            val myViewIs : TextView = findViewById(R.id.textView);
-            val rollResult=myFIrstDice.diceRoll();
+            val rollResult=myFirstDice.diceRoll()
+            val uri = "dice_$rollResult"
+            println("URI is:  $uri")
+            val res = ContextCompat.getDrawable(this, resources.getIdentifier(uri, "drawable", packageName))
+            diceViewIs.setImageDrawable(res)
             when(rollResult){
                 luckyNumber -> {
                     myViewIs.text="You WIN its a ${rollResult.toString()}";
